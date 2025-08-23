@@ -29,11 +29,11 @@ config: t.Dict[str, t.Dict[str, t.Any]] = {
         # tutor config save --set INDIGO_FOOTER_NAV_LINKS=[]
         "FOOTER_NAV_LINKS": [
             {"title": "About Us", "url": "/about"},
-            {"title": "Blog", "url": "/blog"},
-            {"title": "Donate", "url": "/donate"},
+            # {"title": "Blog", "url": "/blog"},
+            # {"title": "Donate", "url": "/donate"},
             {"title": "Terms of Service", "url": "/tos"},
             {"title": "Privacy Policy", "url": "/privacy"},
-            {"title": "Help", "url": "/help"},
+            # {"title": "Help", "url": "/help"},
             {"title": "Contact Us", "url": "/contact"},
         ],
     },
@@ -190,8 +190,9 @@ for path in glob(
         "*",
     )
 ):
-    with open(path, encoding="utf-8") as patch_file:
-        hooks.Filters.ENV_PATCHES.add_item((os.path.basename(path), patch_file.read()))
+    if os.path.isfile(path):  # ✅ only process patch files, not folders
+        with open(path, encoding="utf-8") as patch_file:
+            hooks.Filters.ENV_PATCHES.add_item((os.path.basename(path), patch_file.read()))
 
 
 for mfe in indigo_styled_mfes:

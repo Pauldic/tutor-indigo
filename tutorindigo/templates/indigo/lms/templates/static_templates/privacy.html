@@ -7,18 +7,136 @@
 
 <%block name="pagetitle">${_("Privacy Policy")}</%block>
 
-<main id="main" aria-label="Content" tabindex="-1">
+<main id="main" aria-label="Content" tabindex="-1" style="padding-left: 100px; padding-right: 100px">
     <section class="container about">
         <h1>
             <%block name="pageheader">${page_header or _("Privacy Policy")}</%block>
         </h1>
-        <p>
-            <%block name="pagecontent">${page_content or _("This page left intentionally blank. Feel free to add your own content.")}</%block>
-        </p>
+
+        <%block name="pagecontent">
+            <br/>
+            <b>Privacy Policy</b><br/>
+            <em>Effective Date: 8/11/2025</em>
+            <br /><br />
+
+            The <b>National Association of Companion Animal Rescues (NACAR)</b> is committed to protecting your 
+            privacy and ensuring the security of your personal information. This Privacy Policy outlines how 
+            we collect, use, store, and protect the information you provide when visiting our website or 
+            participating in our educational programs.<br /><br />
+
+            <b>1. Information We Collect</b><br />
+            <div style="margin: 10px 20px;">
+                We collect the following types of information:<br /><br />
+
+                <b>a. Personal Information</b><br />
+                When you interact with NACAR services, such as registering for a course, making a donation, subscribing 
+                to newsletters, or contacting us, we may collect personal information including:
+                <br />
+                
+                <ul>
+                    <li>Full name</li>
+                    <li>Email address</li>
+                    <li>Mailing address</li>
+                    <li>Phone number</li>
+                    <li>Payment information (processed securely via third-party processors)</li>
+                    <li>Professional or organizational affiliation (if applicable)</li>
+                </ul>
+
+                <b>b. Non-Personal Information</b><br />
+                We may collect non-personal data automatically via cookies and analytics tools. This may include:<br />
+                <ul>
+                    <li>IP address</li>
+                    <li>Browser type</li>
+                    <li>Device type</li>
+                    <li>Pages visited</li>
+                    <li>Time spent on the site</li>
+                    <li>Referring website</li>
+                </ul>
+            </div><br />
+
+            <b>2. How We Use Your Information</b><br />
+            <div style="margin: 10px 20px;">
+                We use the information collected to:<br />
+                <ul>
+                    <li>Provide access to educational courses and certificates</li>
+                    <li>Respond to inquiries or customer service requests</li>
+                    <li>Process donations or payments securely</li>
+                    <li>Send newsletters, course updates, or important service announcements</li>
+                    <li>Improve the content, design, and functionality of our website</li>
+                    <li>Analyze user behavior to enhance user experience and site performance</li>
+                </ul>
+            </div><br />
+            
+            <b>3. Sharing Your Information</b><br />
+            <div style="margin: 10px 20px;">
+                We do <b>not</b> sell or rent your personal information. We may share your data only with:<br />
+                <ul>
+                    <li><b>Trusted service providers</b> (e.g., learning management systems, payment processors) solely to support our operations</li>
+                    <li><b>Legal authorities</b> when required to comply with laws, regulations, or legal processes</li>
+                    <li><b>Partner organizations</b> only with your explicit consent, typically in cases involving co-sponsored educational events or certifications</li>
+                </ul>
+            </div><br />
+
+            <b>4. Cookies and Tracking Technologies</b><br />
+            <div style="margin: 10px 20px;">
+                We use cookies and similar technologies to:<br />
+                <ul>
+                    <li>Maintain user sessions</li>
+                    <li>Personalize your learning experience</li>
+                    <li>Track usage for analytical purposes</li>
+                </ul>
+
+                You may disable cookies through your browser settings, but this may affect certain functionalities of our site, including access to your course materials.
+            </div><br />
+
+            <b>5. Data Security</b><br />
+            <div style="margin: 10px 20px;">
+                We take reasonable administrative, technical, and physical safeguards to protect your information against unauthorized access, alteration, disclosure, or destruction.
+                <br />
+                However, no method of online transmission or storage is 100% secure. We encourage users to protect their login credentials and report any suspicious activity.
+            </div><br />
+
+            <b>6. Third-Party Links</b><br />
+            <div style="margin: 10px 20px;">
+                Our website may contain links to third-party websites, including educational partners and external resources. NACAR is not responsible for the privacy practices or content of these websites. We encourage you to review their respective privacy policies.
+            </div><br />
+
+            <b>7. Children’s Privacy</b><br />
+            <div style="margin: 10px 20px;">
+                Our website and educational services are intended for users 13 years of age and older. We do not knowingly collect personal information from children under 13. If we become aware that a child has submitted personal data, we will take steps to delete such information promptly.
+            </div><br />
+
+            <b>8. Accessing and Updating Your Information</b><br />
+            <div style="margin: 10px 20px;">
+                You have the right to:
+                <ul>
+                    <li>Access the personal data we hold about you</li>
+                    <li>Request corrections or updates to your information</li>
+                    <li>Opt out of marketing communications at any time</li>
+                    <li>Request deletion of your account or data (subject to legal obligations)</li>
+                </ul>
+
+                To exercise these rights, please contact us at: <b><a href=mailto:'support@nacarnational.org'>support@nacarnational.org</a></b>
+            </div><br />
+
+            <b>9. Changes to This Policy</b><br />
+            <div style="margin: 10px 20px;">
+                We may update this Privacy Policy periodically. We will notify you of significant changes via email or by posting a prominent notice on our website. The updated policy will be effective as of the date noted at the top.
+            </div><br />
+
+            <b>10. Contact Us</b><br />
+            <div style="margin: 10px 20px 40px 20px;">
+                If you have any questions or concerns about this Privacy Policy or our data practices, please contact: <br />
+
+                <b>National Association of Companion Animal Rescues</b><br />
+                <b>By Mail:</b> 3945 E Vallejo Dr, Gilbert, AZ 85298<br />
+                <b>By Email:</b> <a href=mailto:'support@nacarnational.org'>support@nacarnational.org</a>
+            </div>
+        </%block>
         <!-- NEW IN INDIGO: add graphic image -->
-        <div class="graphic-img">
+        <!--div class="graphic-img">
             <img src="${static.url('images/privacy.svg')}" alt="Runs on Tutor" />
             <img class="dark" src="${static.url('images/privacy-dark.svg')}" alt="Runs on Tutor" />
-        </div>
+        </!--div>
     </section>
 </main>

@@ -5,18 +5,43 @@
 
 <%block name="pagetitle">${_("About")}</%block>
 
-<main id="main" aria-label="Content" tabindex="-1">
+<main id="main" aria-label="Content" tabindex="-1" style="padding-left: 100px; padding-right: 100px">
     <section class="container about">
         <h1>
-            <%block name="pageheader">${page_header or _("About")}</%block>
+            <%block name="pageheader">${page_header or _("About Us")}</%block>
         </h1>
         <p>
-            <%block name="pagecontent">${page_content or _("This page left intentionally blank. Feel free to add your own content.")}</%block>
+            <%block name="pagecontent">
+                The  111 <b>National Association of Companion Animal Rescues (NACAR)</b> was founded by a group of experienced animal 
+                rescuers who shared a common belief: <b>we can make a greater impact by working together.</b>
+                <br/><br/>
+                
+                For years, each of us operated independently—rescuing animals, supporting shelters, advocating for change, 
+                and training volunteers. While our individual efforts made a difference, we recognized a larger need within 
+                the rescue community: <b>unified leadership, stronger standards, and a collaborative voice</b> in the areas of legislation, 
+                education, and professional development. <br /><br />
+                
+                By the end of 2024, it was clear that fragmented efforts were no longer enough. 
+                The challenges facing companion animal rescues—ranging from inconsistent care practices to a lack of regulatory support—demanded 
+                a coordinated, national approach. And so, we came together to form <b>NACAR</b>, the <b>National Association of Companion Animal Rescues.</b>
+                <br/><br/>
+
+                Our mission is simple but powerful: 
+                <b>To raise the standard of care in the rescue industry through education, advocacy, and collaboration.</b>
+                <br /><br />
+
+                Through NACAR, we offer: 
+                <ul>
+                    <li><b>Professional education and training</b> for rescuers, fosters, and organizations</li>
+                    <li><b>Legislative advocacy</b> to promote policies that protect animals and support responsible rescue practices</li>
+                    <li><b>A community of like-minded professionals</b> working together to elevate the field of companion animal rescue</li>
+                </ul>
+                NACAR is more than an organization—it's a movement. A movement toward better practices, stronger partnerships, and a more ethical, effective rescue community.
+                <br /><br />
+
+                Join us in setting a higher standard for the animals and people who depend on us.
+
+            </%block>
         </p>
-        <!-- NEW IN INDIGO: add graphic image -->
-        <div class="graphic-img">
-            <img src="${static.url('images/about.svg')}" alt="Runs on Tutor" />
-            <img class="dark" src="${static.url('images/about-dark.svg')}" alt="Runs on Tutor" />
-        </div>
     </section>
 </main>

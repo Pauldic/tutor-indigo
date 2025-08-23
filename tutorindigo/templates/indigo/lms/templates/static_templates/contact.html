@@ -5,18 +5,39 @@
 
 <%block name="pagetitle">${_("Contact Us")}</%block>
 
-<main id="main" aria-label="Content" tabindex="-1">
+<main id="main" aria-label="Content" tabindex="-1" style="padding-left: 100px; padding-right: 100px">
     <section class="container about">
         <h1>
-            <%block name="pageheader">${page_header or _("Contact")}</%block>
+            <%block name="pageheader">${page_header or _("Contact Us")}</%block>
         </h1>
         <p>
-            <%block name="pagecontent">${page_content or _("This page left intentionally blank. Feel free to add your own content.")}</%block>
+            <%block name="pagecontent">
+                We’d love to hear from you!<br /><br />
+                
+                Whether you have questions about our educational programs, membership, advocacy work, or general inquiries, 
+                the <b>National Association of Companion Animal Rescues (NACAR)</b> is here to help.
+                <br /><br />
+                
+                You can reach us through any of the following methods:
+                <br /><br />
+                
+                <b>📬 By Mail:</b><br />
+                National Association of Companion Animal Rescues<br />
+                3945 E Vallejo Dr<br />
+                Gilbert, AZ 85298<br /><br />
+
+                <b>📧 By Email:</b><br />
+                <a href=mailto:'support@nacarnational.org'>support@nacarnational.org</a><br /><br />
+                
+                We aim to respond to all inquiries within 2–3 business days. Thank you for your commitment to raising 
+                the standard of care in companion animal rescue!
+
+            </%block>
         </p>
         <!-- NEW IN INDIGO: add graphic image -->
-        <div class="graphic-img">
+        <!-- div class="graphic-img">
             <img src="${static.url('images/contact.svg')}" alt="Runs on Tutor" />
             <img class="dark" src="${static.url('images/contact-dark.svg')}" alt="Runs on Tutor" />
-        </div>
+        </!-->
     </section>
 </main>
