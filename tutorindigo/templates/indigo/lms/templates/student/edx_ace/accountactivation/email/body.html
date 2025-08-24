@@ -1,15 +1,9 @@
-{# Jinja2 version of body.html #}
-{% extends "ace_common/edx_ace/common/base_body.html" %}
-
+{# Standalone Tutor-safe template #}
 {% block content %}
+  <p>Welcome to {{ site_name }}!</p>
+  <p>Please activate your account by clicking the button below:</p>
   <p>
-    Welcome to {{ site_name }}!
-  </p>
-  <p>
-    Please activate your account by clicking the button below:
-  </p>
-  <p>
-    <a href="{{ activation_link }}" 
+    <a href="{{ activation_link }}"
        style="background-color:#0077CC;color:#ffffff;padding:10px 20px;
               text-decoration:none;border-radius:5px;">
       Activate Account
