@@ -190,9 +190,8 @@ for path in glob(
         "*",
     )
 ):
-    if os.path.isfile(path):  # ✅ only process patch files, not folders
-        with open(path, encoding="utf-8") as patch_file:
-            hooks.Filters.ENV_PATCHES.add_item((os.path.basename(path), patch_file.read()))
+    with open(path, encoding="utf-8") as patch_file:
+        hooks.Filters.ENV_PATCHES.add_item((os.path.basename(path), patch_file.read()))
 
 
 for mfe in indigo_styled_mfes:

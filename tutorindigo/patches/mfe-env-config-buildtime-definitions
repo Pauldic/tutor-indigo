@@ -1,5 +1,3 @@
-
-
 let themeCookie = 'indigo-toggle-dark';
 let themeCookieExpiry = 90; // days
 
