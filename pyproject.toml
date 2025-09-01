@@ -6,10 +6,9 @@ description = "Indigo theme plugin for Tutor"
 readme = { file = "README.rst", content-type = "text/x-rst" }
 license = { text = "AGPLv3" }
 requires-python = ">=3.9"
-authors = [{ name = "Edly" }, { email = "hello@edly.io" }]
+authors = [{ name = "Paul Okeke" }, { email = "pauldiconline@gmail.com" }]
 maintainers = [
-    { name = "Ahmed Khalid" }, { email = "ahmed.khalid@arbisoft.com" },
-    { name = "Hammad Yousaf" }, { email = "hammad.yousaf@arbisoft.com" }
+    { name = "Paul Okeke" }, { email = "pauldiconline@gmail.com" }
 ]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
