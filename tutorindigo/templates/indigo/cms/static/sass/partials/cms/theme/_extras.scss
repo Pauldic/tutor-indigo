@@ -3,3 +3,13 @@
 #main{
     background-color: $secondary;
 }
+
+// My Styles comes below:
+
+/* Hide Studio Help link */
+.help-sidebar .sidebar-link,
+button[data-testid="helpToggleButton"],
+a[href*="readthedocs.io"],
+.footer-top .powered-area {
+ display: none !important;
+}
