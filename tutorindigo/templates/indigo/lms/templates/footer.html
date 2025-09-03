@@ -10,6 +10,9 @@
 <% footer = get_footer(is_secure=is_secure) %>
 <% icp_license_info = getattr(settings, 'ICP_LICENSE_INFO', {})%>
 <%namespace name='static' file='static_content.html'/>
+
+<%! hide_openedx_link = True %>
+
 <!-- NEW IN INDIGO update footer -->
 % if uses_bootstrap:
 <div class="wrapper wrapper-footer">
@@ -22,6 +25,26 @@
     % endif
   >
   <div class="footer-top">
+    <div class="powered-area">
+      ## Please leave this link and use one of the logos provided
+      ## The OpenEdX link may be hidden when this view is served
+      ## through an API to partner sites (such as marketing sites or blogs),
+      ## which are not technically powered by OpenEdX.
+      % if not hide_openedx_link:
+      <ul class="logo-list">
+        <li>Powered by:</li>
+        <li>
+          <a href="https://docs.tutor.edly.io" rel="noopener" target="_blank">
+            <img src="${static.url('images/tutor-logo.png')}" alt="Runs on Tutor" width="80" />
+          </a>
+        </li>
+        <li>
+          <a href="${footer['openedx_link']['url']}" rel="noopener" target="_blank">
+            <img src="${static.url('images/openedx-logo.png')}" alt="${footer['openedx_link']['title']}" width="79" />
+          </a>
+        </li>
+      </ul>
+    </div>
     {% if INDIGO_FOOTER_NAV_LINKS %}
     <nav class="nav-colophon" aria-label="${_('About')}">
       <ol>
@@ -55,7 +78,7 @@
   </footer>
 </div>
 % else:
-  <!-- NEW IN INDIGO update footer -->
+<!-- NEW IN INDIGO update footer -->
   <div class="wrapper wrapper-footer">
     <footer id="footer" class="tutor-container"
       ## When rendering the footer through the branding API,
@@ -66,6 +89,26 @@
       % endif
     >
     <div class="footer-top">
+      <div class="powered-area">
+        ## Please leave this link and use one of the logos provided
+        ## The OpenEdX link may be hidden when this view is served
+        ## through an API to partner sites (such as marketing sites or blogs),
+        ## which are not technically powered by OpenEdX.
+        % if not hide_openedx_link:
+        <ul class="logo-list">
+          <li>Powered by:</li>
+          <li>
+            <a href="https://docs.tutor.edly.io" rel="noopener" target="_blank">
+              <img src="${static.url('images/tutor-logo.png')}" alt="Runs on Tutor" width="80" />
+            </a>
+          </li>
+          <li>
+            <a href="${footer['openedx_link']['url']}" rel="noopener" target="_blank">
+              <img src="${static.url('images/openedx-logo.png')}" alt="${footer['openedx_link']['title']}" width="79" />
+            </a>
+          </li>
+        </ul>
+      </div>
       {% if INDIGO_FOOTER_NAV_LINKS %}
       <nav class="nav-colophon" aria-label="${_('About')}">
         <ol>
@@ -78,7 +121,7 @@
       </nav>
       {% endif %}
     </div>
-    <span class="copyright-site">Copyrights ©${datetime.now().year}. All Rights Reserved..</span>
+    <span class="copyright-site">Copyrights ©${datetime.now().year}. All Rights Reserved.</span>
     % endif
       <div class="colophon">
 
