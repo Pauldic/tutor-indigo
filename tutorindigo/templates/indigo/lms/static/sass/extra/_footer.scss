@@ -27,9 +27,11 @@ footer.tutor-container {
             display: none !important;
             @include media-breakpoint-up(md) {
                 margin: 0 0 15px;
+                display: none !important;
             }
             @include media-breakpoint-up(lg) {
                 float: left;
+                display: none !important;
             }
         }
     }
@@ -133,13 +135,4 @@ body.indigo-dark-theme {
         }
 
     }
-}
-
-.help-sidebar > .sidebar-link,
-button[data-testid="helpToggleButton"],
-a[href*="edx.org"],
-a[href*="openedx.org"],
-a[href*="readthedocs.io"],
-.footer-top > .powered-area {
- display: none !important;
 }
