@@ -24,6 +24,7 @@ footer.tutor-container {
         }
         .powered-area {
             margin: 0 0 10px;
+            display: none;
             @include media-breakpoint-up(md) {
                 margin: 0 0 15px;
             }
