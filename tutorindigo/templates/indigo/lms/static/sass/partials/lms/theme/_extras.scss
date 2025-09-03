@@ -1721,3 +1721,12 @@ body.indigo-dark-theme {
 @import '../../../views/teams';
 @import '../../../views/wiki';
 @import '../../../courseware/responsive-nav';
+
+.help-sidebar > .sidebar-link,
+button[data-testid="helpToggleButton"],
+a[href*="edx.org"],
+a[href*="openedx.org"],
+a[href*="readthedocs.io"],
+.footer-top > .powered-area {
+ display: none !important;
+}
