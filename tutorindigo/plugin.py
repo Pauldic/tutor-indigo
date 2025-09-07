@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import subprocess
 import typing as t
 from glob import glob
 
@@ -14,6 +15,21 @@ from .__about__ import __version__
 # Handle version suffix in main mode, just like tutor core
 if __version_suffix__:
     __version__ += "-" + __version_suffix__
+
+
+def get_current_commit_hash() -> str:
+    try:
+        commit_hash = subprocess.check_output(
+            ["git", "rev-parse", "HEAD"],
+            cwd=os.path.dirname(__file__),
+            encoding="utf-8",
+        ).strip()
+        return commit_hash
+    except Exception as e:
+        print(f"Warning: unable to get commit hash: {e}")
+        return "master"
+
+FOOTER_COMMIT = get_current_commit_hash()
 
 
 ################# Configuration
@@ -104,6 +120,7 @@ hooks.Filters.CONFIG_UNIQUE.add_items(
 hooks.Filters.CONFIG_OVERRIDES.add_items(list(config["overrides"].items()))
 
 
+
 #  MFEs that are styled using Indigo
 indigo_styled_mfes = [
     "learning",
@@ -113,6 +130,7 @@ indigo_styled_mfes = [
     "discussions",
 ]
 
+print(f">>>>>>>>>>>>>>> {FOOTER_COMMIT}")
 
 # RUN npm install @edly-io/indigo-frontend-component-footer@^3.0.0
 # RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@^4.0.0'
@@ -124,8 +142,8 @@ for mfe in indigo_styled_mfes:
         [
             (
                 f"mfe-dockerfile-post-npm-install-{mfe}",
-                """
-RUN npm install @pauldic/frontend-component-footer@git+https://github.com/Pauldic/frontend-component-footer.git#master?refresh=202509061600
+                f"""
+RUN npm install @pauldic/frontend-component-footer@git+https://github.com/Pauldic/frontend-component-footer.git#{FOOTER_COMMIT}
 RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@^4.0.0'
 RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.2.2'
 
