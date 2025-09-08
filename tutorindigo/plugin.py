@@ -119,7 +119,24 @@ hooks.Filters.CONFIG_UNIQUE.add_items(
 )
 hooks.Filters.CONFIG_OVERRIDES.add_items(list(config["overrides"].items()))
 
-
+# # Added to fix a requirement error
+# hooks.Filters.ENV_PATCHES.add_item(
+#     (
+#         "mfe-dockerfile-pre-npm-install",
+#         """
+# USER root
+# RUN apt-get update && apt-get install -y \
+#     build-essential \
+#     python3 \
+#     make \
+#     g++ \
+#     libc6-dev \
+#     libvips-dev \
+#     && rm -rf /var/lib/apt/lists/*
+# USER openedx
+# """
+#     )
+# )
 
 #  MFEs that are styled using Indigo
 indigo_styled_mfes = [
