@@ -125,14 +125,14 @@ hooks.Filters.ENV_PATCHES.add_item((
     "openedx-cms-common-settings",
     """
 PIPELINE['STYLESHEETS']['style-main-v1']['source_filenames'] += ['css/custom-studio.css']
-PIPELINE['STYLESHEETS']['style-main'-v1-rtl]['source_filenames'] += ['css/custom-studio.css']
+PIPELINE['STYLESHEETS']['style-main-v1-rtl']['source_filenames'] += ['css/custom-studio.css']
 """
 ))
 hooks.Filters.ENV_PATCHES.add_item((
     "openedx-cms-common-settings",
     """
 PIPELINE['STYLESHEETS']['style-main-v1']['source_filenames'] += ['indigo/css/custom-studio.css']
-PIPELINE['STYLESHEETS']['style-main'-v1-rtl]['source_filenames'] += ['indigo/css/custom-studio.css']
+PIPELINE['STYLESHEETS']['style-main-v1-rtl']['source_filenames'] += ['indigo/css/custom-studio.css']
 """
 ))
 # hooks.Filters.ENV_PATCHES.add_item((
