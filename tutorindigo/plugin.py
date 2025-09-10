@@ -151,8 +151,7 @@ indigo_styled_mfes = [
     "learner-dashboard",
     "profile",
     "account",
-    "discussions",
-    "authoring"
+    "discussions"
 ]
 
 # RUN npm install @edly-io/indigo-frontend-component-footer@^3.0.0
@@ -169,7 +168,6 @@ for mfe in indigo_styled_mfes:
 RUN npm install @pauldic/frontend-component-footer@git+https://github.com/Pauldic/frontend-component-footer.git#5ce35c96ec0419ed61faa44ed5a667e920ec76fa
 RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@^4.0.0'
 RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.2.2'
-
 """,
             ),
             (
@@ -180,7 +178,6 @@ const { default: IndigoFooter } = await import('@pauldic/frontend-component-foot
             ),
         ]
     )
-
 
 hooks.Filters.ENV_PATCHES.add_item(
     (
