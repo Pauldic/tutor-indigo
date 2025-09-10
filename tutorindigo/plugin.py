@@ -119,24 +119,25 @@ hooks.Filters.CONFIG_UNIQUE.add_items(
 )
 hooks.Filters.CONFIG_OVERRIDES.add_items(list(config["overrides"].items()))
 
-# # Added to fix a requirement error
-# hooks.Filters.ENV_PATCHES.add_item(
-#     (
-#         "mfe-dockerfile-pre-npm-install",
-#         """
-# USER root
-# RUN apt-get update && apt-get install -y \
-#     build-essential \
-#     python3 \
-#     make \
-#     g++ \
-#     libc6-dev \
-#     libvips-dev \
-#     && rm -rf /var/lib/apt/lists/*
-# USER openedx
-# """
-#     )
-# )
+
+# Injects CSS/JS into Studio templates:
+hooks.Filters.ENV_PATCHES.add_item((
+    "openedx-cms-common-settings",
+    """PIPELINE['STYLESHEETS']['style']['source_filenames'] += ['css/custom-studio.css'] """
+))
+hooks.Filters.ENV_PATCHES.add_item((
+    "openedx-cms-common-settings",
+    """PIPELINE['STYLESHEETS']['style']['source_filenames'] += ['indigo/css/custom-studio.css'] """
+))
+# hooks.Filters.ENV_PATCHES.add_item((
+#     "openedx-cms-development-settings",
+#     """PIPELINE['STYLESHEETS']['style']['source_filenames'] += ['css/custom-studio.css'] """
+# ))
+# hooks.Filters.ENV_PATCHES.add_item((
+#     "openedx-cms-production-settings",
+#     """PIPELINE['STYLESHEETS']['style']['source_filenames'] += ['css/custom-studio.css'] """
+# ))
+
 
 #  MFEs that are styled using Indigo
 indigo_styled_mfes = [

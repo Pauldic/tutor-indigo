@@ -1,0 +1,11 @@
+/* Hide Studio Help link */
+.help-sidebar > .sidebar-link,
+.help-sidebar .sidebar-link,
+button[data-testid="helpToggleButton"],
+a[href*="edx.org"],
+a[href*="openedx.org"],
+a[href*="readthedocs.io"],
+.footer-top .powered-area,
+.footer-top > .powered-area {
+    display: none !important;
+}
