@@ -121,14 +121,14 @@ hooks.Filters.CONFIG_OVERRIDES.add_items(list(config["overrides"].items()))
 
 
 # Injects CSS/JS into Studio templates:
-hooks.Filters.ENV_PATCHES.add_item((
-    "openedx-cms-common-settings",
-    """PIPELINE['STYLESHEETS']['style-main']['source_filenames'] += ['css/custom-studio.css'] """
-))
-hooks.Filters.ENV_PATCHES.add_item((
-    "openedx-cms-common-settings",
-    """PIPELINE['STYLESHEETS']['style-main']['source_filenames'] += ['indigo/css/custom-studio.css'] """
-))
+# hooks.Filters.ENV_PATCHES.add_item((
+#     "openedx-cms-common-settings",
+#     """PIPELINE['STYLESHEETS']['style-main']['source_filenames'] += ['css/custom-studio.css'] """
+# ))
+# hooks.Filters.ENV_PATCHES.add_item((
+#     "openedx-cms-common-settings",
+#     """PIPELINE['STYLESHEETS']['style-main']['source_filenames'] += ['indigo/css/custom-studio.css'] """
+# ))
 # hooks.Filters.ENV_PATCHES.add_item((
 #     "openedx-cms-development-settings",
 #     """PIPELINE['STYLESHEETS']['style-main']['source_filenames'] += ['css/custom-studio.css'] """
