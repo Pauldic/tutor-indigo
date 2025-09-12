@@ -70,12 +70,11 @@ hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
 )
 
 # Force the rendering of scss files, even though they are included in a "partials" directory
-hooks.Filters.ENV_PATTERNS_INCLUDE.add_items(
-    [
-        r"indigo/lms/static/sass/partials/lms/theme/",
-        r"indigo/cms/static/sass/partials/cms/theme/",
-    ]
-)
+hooks.Filters.ENV_PATTERNS_INCLUDE.add_items([
+    r"indigo/lms/static/sass/partials/lms/theme/",
+    r"indigo/cms/static/sass/partials/cms/theme/",
+    r"indigo/cms/static/css/" # nah me add am
+])
 
 
 # init script: set theme automatically
@@ -145,74 +144,54 @@ PIPELINE['STYLESHEETS']['style-main-v1-rtl']['source_filenames'] += ['indigo/css
 # ))
 
 
+# https://github.com/orgs/openedx/repositories?type=all&q=frontend-app-
 #  MFEs that are styled using Indigo
 indigo_styled_mfes = [
+    "authoring",
     "learning",
     "learner-dashboard",
     "profile",
     "account",
     "discussions",
-    "authoring"
 ]
+
 
 # RUN npm install @edly-io/indigo-frontend-component-footer@^3.0.0
 # RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@^4.0.0'
 # RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.2.2'
 # ----
 # const { default: IndigoFooter } = await import('@edly-io/indigo-frontend-component-footer');
-# for mfe in indigo_styled_mfes:
-#     hooks.Filters.ENV_PATCHES.add_items(
-#         [
-#             (
-#                 f"mfe-dockerfile-post-npm-install-{mfe}",
-#                 f"""
-# RUN npm install @pauldic/frontend-component-footer@git+https://github.com/Pauldic/frontend-component-footer.git#2c5ffb2f6cbe56bd51f4d31d626479549ebcc124
-# RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@^4.0.0'
-# RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.2.2'
-# """,
-#             ),
-#             (
-#                 f"mfe-env-config-runtime-definitions-{mfe}",
-#                 """
-# const { default: IndigoFooter } = await import('@pauldic/frontend-component-footer');
-# """,
-#             ),
-#         ]
-#     )
-
-hooks.Filters.ENV_PATCHES.add_items([
-    (
-        f"mfe-dockerfile-post-npm-install",
-        f"""
-RUN npm install @pauldic/frontend-component-footer@git+https://github.com/Pauldic/frontend-component-footer.git#8dcf545ba77d942f5242d7f852159fcf5be17f83
+for mfe in indigo_styled_mfes:
+    hooks.Filters.ENV_PATCHES.add_items([
+        (
+            f"mfe-dockerfile-post-npm-install-{mfe}",
+            f"""
+RUN npm install @pauldic/frontend-component-footer@git+https://github.com/Pauldic/frontend-component-footer.git#2c5ffb2f6cbe56bd51f4d31d626479549ebcc124
 RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@^4.0.0'
 RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.2.2'
 """,
-    ),
-    (
-        f"mfe-env-config-runtime-definitions",
-        """
+        ),
+        (
+            f"mfe-env-config-runtime-definitions-{mfe}",
+            """
 const { default: IndigoFooter } = await import('@pauldic/frontend-component-footer');
 """,
-    ),
+        ),
+    ])
+
+
+hooks.Filters.ENV_PATCHES.add_item([
+    "mfe-dockerfile-post-npm-install-authn",
+    "RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.2.2'",
 ])
-
-
-hooks.Filters.ENV_PATCHES.add_item(
-    (
-        "mfe-dockerfile-post-npm-install-authn",
-        "RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.2.2'",
-    )
-)
 
 # Include js file in lms main.html, main_django.html, and certificate.html
 
-hooks.Filters.ENV_PATCHES.add_items(
-    [
-        # for production
-        (
-            "openedx-common-assets-settings",
-            """
+hooks.Filters.ENV_PATCHES.add_items([
+    # for production
+    (
+        "openedx-common-assets-settings",
+        """
 javascript_files = ['base_application', 'application', 'certificates_wv']
 dark_theme_filepath = ['indigo/js/dark-theme.js']
 
@@ -220,11 +199,11 @@ for filename in javascript_files:
     if filename in PIPELINE['JAVASCRIPT']:
         PIPELINE['JAVASCRIPT'][filename]['source_filenames'] += dark_theme_filepath
 """,
-        ),
-        # for development
-        (
-            "openedx-lms-development-settings",
-            """
+    ),
+    # for development
+    (
+        "openedx-lms-development-settings",
+        """
 javascript_files = ['base_application', 'application', 'certificates_wv']
 dark_theme_filepath = ['indigo/js/dark-theme.js']
 
@@ -234,83 +213,81 @@ for filename in javascript_files:
 
 MFE_CONFIG['INDIGO_ENABLE_DARK_TOGGLE'] = {{ INDIGO_ENABLE_DARK_TOGGLE }}
 """,
-        ),
-        (
-            "openedx-lms-production-settings",
-            """
+    ),
+    (
+        "openedx-lms-production-settings",
+        """
 MFE_CONFIG['INDIGO_ENABLE_DARK_TOGGLE'] = {{ INDIGO_ENABLE_DARK_TOGGLE }}
 """,
-        ),
-    ]
-)
+    )
+])
 
 
 # Apply patches from tutor-indigo
-for path in glob(
-    os.path.join(
-        str(importlib_resources.files("tutorindigo") / "patches"),
-        "*",
-    )
-):
+for path in glob(os.path.join(str(importlib_resources.files("tutorindigo") / "patches"), "*")):
     with open(path, encoding="utf-8") as patch_file:
         hooks.Filters.ENV_PATCHES.add_item((os.path.basename(path), patch_file.read()))
 
 
-# for mfe in indigo_styled_mfes:
-#     PLUGIN_SLOTS.add_item([
-#         mfe,
-#         "footer_slot",
-#         """ 
-#         {
-#             op: PLUGIN_OPERATIONS.Hide,
-#             widgetId: 'default_contents',
+for mfe in indigo_styled_mfes:
+    slot_id_alias ="studio_footer_slot" if mfe == "authoring" else "footer_slot"
+    print(f">>>> MFE: {mfe},  SLOT_ID_ALIAS: {slot_id_alias}")
+
+    PLUGIN_SLOTS.add_item([
+        mfe,
+        slot_id_alias,
+        """ 
+        {
+            op: PLUGIN_OPERATIONS.Hide,
+            widgetId: 'default_contents',
+        },
+        {
+            op: PLUGIN_OPERATIONS.Insert,
+            widget: {
+                id: 'default_contents',
+                type: DIRECT_PLUGIN,
+                priority: 1,
+                RenderWidget: <IndigoFooter />,
+            },
+        },
+        {
+            op: PLUGIN_OPERATIONS.Insert,
+            widget: {
+                id: 'read_theme_cookie',
+                type: DIRECT_PLUGIN,
+                priority: 2,
+                RenderWidget: AddDarkTheme,
+            },
+        },
+        """,
+    ])
+
+
+# PLUGIN_SLOTS.add_item([
+#     "all",
+#     "footer_slot",
+#     """ 
+#     {
+#         op: PLUGIN_OPERATIONS.Hide,
+#         widgetId: 'default_contents',
+#     },
+#     {
+#         op: PLUGIN_OPERATIONS.Insert,
+#         widget: {
+#             id: 'default_contents',
+#             type: DIRECT_PLUGIN,
+#             priority: 1,
+#             RenderWidget: <IndigoFooter />,
 #         },
-#         {
-#             op: PLUGIN_OPERATIONS.Insert,
-#             widget: {
-#                 id: 'default_contents',
-#                 type: DIRECT_PLUGIN,
-#                 priority: 1,
-#                 RenderWidget: <IndigoFooter />,
-#             },
+#     },
+#     {
+#         op: PLUGIN_OPERATIONS.Insert,
+#         widget: {
+#             id: 'read_theme_cookie',
+#             type: DIRECT_PLUGIN,
+#             priority: 2,
+#             RenderWidget: AddDarkTheme,
 #         },
-#         {
-#             op: PLUGIN_OPERATIONS.Insert,
-#             widget: {
-#                 id: 'read_theme_cookie',
-#                 type: DIRECT_PLUGIN,
-#                 priority: 2,
-#                 RenderWidget: AddDarkTheme,
-#             },
-#         },
+#     },
 #   """,
 # ])
-
-PLUGIN_SLOTS.add_item([
-    "all",
-    "footer_slot",
-    """ 
-    {
-        op: PLUGIN_OPERATIONS.Hide,
-        widgetId: 'default_contents',
-    },
-    {
-        op: PLUGIN_OPERATIONS.Insert,
-        widget: {
-            id: 'default_contents',
-            type: DIRECT_PLUGIN,
-            priority: 1,
-            RenderWidget: <IndigoFooter />,
-        },
-    },
-    {
-        op: PLUGIN_OPERATIONS.Insert,
-        widget: {
-            id: 'read_theme_cookie',
-            type: DIRECT_PLUGIN,
-            priority: 2,
-            RenderWidget: AddDarkTheme,
-        },
-    },
-  """,
-])
