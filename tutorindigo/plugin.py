@@ -166,7 +166,7 @@ for mfe in indigo_styled_mfes:
         (
             f"mfe-dockerfile-post-npm-install-{mfe}",
             f"""
-RUN npm install @pauldic/frontend-component-footer@git+https://github.com/Pauldic/frontend-component-footer.git#2c5ffb2f6cbe56bd51f4d31d626479549ebcc124
+RUN npm install @pauldic/frontend-component-footer@git+https://github.com/Pauldic/frontend-component-footer.git#8dcf545ba77d942f5242d7f852159fcf5be17f83
 RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@^4.0.0'
 RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.2.2'
 """,
@@ -231,8 +231,7 @@ for path in glob(os.path.join(str(importlib_resources.files("tutorindigo") / "pa
 
 for mfe in indigo_styled_mfes:
     slot_id_alias ="studio_footer_slot" if mfe == "authoring" else "footer_slot"
-    print(f">>>> MFE: {mfe},  SLOT_ID_ALIAS: {slot_id_alias}")
-
+    
     PLUGIN_SLOTS.add_item([
         mfe,
         slot_id_alias,
