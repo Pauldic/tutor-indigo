@@ -177,7 +177,12 @@ for mfe in indigo_styled_mfes:
         (
             f"mfe-dockerfile-post-npm-install-{mfe}",
             f"""
-RUN npm install @pauldic/frontend-component-footer@git+https://github.com/Pauldic/frontend-component-footer.git#8dcf545ba77d942f5242d7f852159fcf5be17f83
+# Copy local package tarball into container
+COPY ./pauldic-frontend-component-footer-1.0.1-custom.tgz /openedx/app/pauldic-frontend-component-footer-1.0.1-custom.tgz
+# Install from local file instead of GitHub
+RUN npm install /openedx/app/pauldic-frontend-component-footer-1.0.1-custom.tgz
+# RUN npm install @pauldic/frontend-component-footer@git+https://github.com/Pauldic/frontend-component-footer.git#8dcf545ba77d942f5242d7f852159fcf5be17f83
+# RUN npm install @edly-io/indigo-frontend-component-footer@^3.0.0
 RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@^4.0.0'
 RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.2.2'
 """,
