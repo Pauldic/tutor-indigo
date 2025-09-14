@@ -144,6 +144,17 @@ PIPELINE['STYLESHEETS']['style-main-v1-rtl']['source_filenames'] += ['indigo/css
 # ))
 
 
+RUN apt update && \
+    apt-get install -y --no-install-recommends \
+        build-essential \
+        python3 \
+        python3-pip \
+        make \
+        g++ \
+        libvips-dev \
+    && rm -rf /var/lib/apt/lists/*
+    
+
 # https://github.com/orgs/openedx/repositories?type=all&q=frontend-app-
 #  MFEs that are styled using Indigo
 indigo_styled_mfes = [
@@ -229,6 +240,7 @@ for path in glob(os.path.join(str(importlib_resources.files("tutorindigo") / "pa
         hooks.Filters.ENV_PATCHES.add_item((os.path.basename(path), patch_file.read()))
 
 
+# https://docs.openedx.org/en/latest/community/release_notes/sumac/customizing_header.html
 for mfe in indigo_styled_mfes:
     slot_id_alias ="studio_footer_slot" if mfe == "authoring" else "footer_slot"
     
