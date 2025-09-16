@@ -17,21 +17,6 @@ if __version_suffix__:
     __version__ += "-" + __version_suffix__
 
 
-def get_current_commit_hash() -> str:
-    try:
-        commit_hash = subprocess.check_output(
-            ["git", "rev-parse", "HEAD"],
-            cwd=os.path.dirname(__file__),
-            encoding="utf-8",
-        ).strip()
-        return commit_hash
-    except Exception as e:
-        print(f"Warning: unable to get commit hash: {e}")
-        return "master"
-
-FOOTER_COMMIT = get_current_commit_hash()
-
-
 ################# Configuration
 config: t.Dict[str, t.Dict[str, t.Any]] = {
     # Add here your new settings
@@ -166,14 +151,9 @@ for mfe in indigo_styled_mfes:
         (
             f"mfe-dockerfile-post-npm-install-{mfe}",
             f"""
-# Copy local package tarball into container
-# COPY ./pauldic-frontend-component-footer-1.0.1-custom.tgz /openedx/app/pauldic-frontend-component-footer-1.0.1-custom.tgz
-# Install from local file instead of GitHub
-# RUN npm install /openedx/app/pauldic-frontend-component-footer-1.0.1-custom.tgz
-# RUN npm install @pauldic/frontend-component-footer@git+https://github.com/Pauldic/frontend-component-footer.git#8dcf545ba77d942f5242d7f852159fcf5be17f83
-# Copy npm credentials and install package
+# Copy this to the MFE Container build contest first [cp ~/.npmrc ~/.local/share/tutor/env/plugins/mfe/build/mfe/]
 COPY .npmrc /root/.npmrc
-RUN npm install '@pauldic/frontend-component-footer@1.0.1-custom'
+RUN npm install '@pauldic/frontend-component-footer@1.0.12'
 # RUN npm install @edly-io/indigo-frontend-component-footer@^3.0.0
 RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@^4.0.0'
 RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.2.2'
@@ -269,33 +249,34 @@ for mfe in indigo_styled_mfes:
         },
         """,
     ])
+    
+    # if mfe == "authoring":
+    #     PLUGIN_SLOTS.add_item([
+    #         mfe,
+    #         "course_authoring_outline_sidebar_slot",
+    #         """ 
+    #         {
+    #             op: PLUGIN_OPERATIONS.Hide,
+    #             widgetId: 'default_contents',
+    #         },
+    #         {
+    #             op: PLUGIN_OPERATIONS.Insert,
+    #             widget: {
+    #                 id: 'default_contents',
+    #                 type: DIRECT_PLUGIN,
+    #                 priority: 1,
+    #                 RenderWidget: ({ component }) => (
+    #                     <div className="my-sidebar-wrapper">
+    #                         <style>{`
+    #                             .my-sidebar-wrapper a[href*="readthedocs.io"] {
+    #                                 display: none !important;
+    #                             }
+    #                         `}</style>
+    #                         {component}
+    #                     </div>
+    #                 ),
+    #             },
+    #         } 
+    #         """    
+    #     ]),
 
-
-# PLUGIN_SLOTS.add_item([
-#     "all",
-#     "footer_slot",
-#     """ 
-#     {
-#         op: PLUGIN_OPERATIONS.Hide,
-#         widgetId: 'default_contents',
-#     },
-#     {
-#         op: PLUGIN_OPERATIONS.Insert,
-#         widget: {
-#             id: 'default_contents',
-#             type: DIRECT_PLUGIN,
-#             priority: 1,
-#             RenderWidget: <IndigoFooter />,
-#         },
-#     },
-#     {
-#         op: PLUGIN_OPERATIONS.Insert,
-#         widget: {
-#             id: 'read_theme_cookie',
-#             type: DIRECT_PLUGIN,
-#             priority: 2,
-#             RenderWidget: AddDarkTheme,
-#         },
-#     },
-#   """,
-# ])
