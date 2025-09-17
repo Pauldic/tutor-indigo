@@ -221,16 +221,7 @@ for path in glob(os.path.join(str(importlib_resources.files("tutorindigo") / "pa
 for mfe in indigo_styled_mfes:
     if mfe == "authoring":
         slot_id_alias = "studio_footer_slot"
-        footer_component = "StudioFooter"
-    else:
-        slot_id_alias = "footer_slot"
-        footer_component = "IndigoFooter"
-        
-    
-    PLUGIN_SLOTS.add_item([
-        mfe,
-        slot_id_alias,
-        """ 
+        footer_component = """ 
         {
             op: PLUGIN_OPERATIONS.Hide,
             widgetId: 'default_contents',
@@ -241,7 +232,7 @@ for mfe in indigo_styled_mfes:
                 id: 'default_contents',
                 type: DIRECT_PLUGIN,
                 priority: 1,
-                RenderWidget: <{footer_component} />,
+                RenderWidget: <StudioFooter />,
             },
         },
         {
@@ -253,8 +244,34 @@ for mfe in indigo_styled_mfes:
                 RenderWidget: AddDarkTheme,
             },
         },
-        """,
-    ])
+        """
+    else:
+        slot_id_alias = "footer_slot"
+        footer_component = """ 
+        {
+            op: PLUGIN_OPERATIONS.Hide,
+            widgetId: 'default_contents',
+        },
+        {
+            op: PLUGIN_OPERATIONS.Insert,
+            widget: {
+                id: 'default_contents',
+                type: DIRECT_PLUGIN,
+                priority: 1,
+                RenderWidget: <IndigoFooter />,
+            },
+        },
+        {
+            op: PLUGIN_OPERATIONS.Insert,
+            widget: {
+                id: 'read_theme_cookie',
+                type: DIRECT_PLUGIN,
+                priority: 2,
+                RenderWidget: AddDarkTheme,
+            },
+        },
+        """    
+    PLUGIN_SLOTS.add_item([mfe, slot_id_alias, footer_component])
     
     # if mfe == "authoring":
     #     PLUGIN_SLOTS.add_item([
