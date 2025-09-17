@@ -146,6 +146,7 @@ indigo_styled_mfes = [
 # RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.2.24
 # ----
 # const { default: IndigoFooter } = await import('@edly-io/indigo-frontend-component-footer');
+# const { default: IndigoFooter } = await import('@pauldic/frontend-component-footer');
 for mfe in indigo_styled_mfes:
     hooks.Filters.ENV_PATCHES.add_items([
         (
@@ -153,7 +154,7 @@ for mfe in indigo_styled_mfes:
             f"""
 # Copy this to the MFE Container build contest first [cp ~/.npmrc ~/.local/share/tutor/env/plugins/mfe/build/mfe/]
 COPY .npmrc /root/.npmrc
-RUN npm install '@pauldic/frontend-component-footer@1.0.14'
+RUN npm install '@pauldic/frontend-component-footer@1.0.17'
 RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@^4.0.0'
 RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.2.2'
 """,
@@ -161,7 +162,7 @@ RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.2.2'
         (
             f"mfe-env-config-runtime-definitions-{mfe}",
             """
-const { default: IndigoFooter } = await import('@pauldic/frontend-component-footer');
+const { default: IndigoFooter, StudioFooter } = await import('@pauldic/frontend-component-footer');
 """,
         ),
     ])
@@ -218,7 +219,13 @@ for path in glob(os.path.join(str(importlib_resources.files("tutorindigo") / "pa
 
 # https://docs.openedx.org/en/latest/community/release_notes/sumac/customizing_header.html
 for mfe in indigo_styled_mfes:
-    slot_id_alias ="studio_footer_slot" if mfe == "authoring" else "footer_slot"
+    if mfe == "authoring":
+        slot_id_alias = "studio_footer_slot"
+        footer_component = "StudioFooter"
+    else:
+        slot_id_alias = "footer_slot"
+        footer_component = "IndigoFooter"
+        
     
     PLUGIN_SLOTS.add_item([
         mfe,
@@ -234,7 +241,7 @@ for mfe in indigo_styled_mfes:
                 id: 'default_contents',
                 type: DIRECT_PLUGIN,
                 priority: 1,
-                RenderWidget: <IndigoFooter />,
+                RenderWidget: <{footer_component} />,
             },
         },
         {
