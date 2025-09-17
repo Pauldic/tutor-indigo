@@ -143,7 +143,7 @@ indigo_styled_mfes = [
 
 # RUN npm install @edly-io/indigo-frontend-component-footer@^3.0.0
 # RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@^4.0.0'
-# RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.2.2'
+# RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.2.24
 # ----
 # const { default: IndigoFooter } = await import('@edly-io/indigo-frontend-component-footer');
 for mfe in indigo_styled_mfes:
@@ -153,7 +153,7 @@ for mfe in indigo_styled_mfes:
             f"""
 # Copy this to the MFE Container build contest first [cp ~/.npmrc ~/.local/share/tutor/env/plugins/mfe/build/mfe/]
 COPY .npmrc /root/.npmrc
-RUN npm install '@pauldic/frontend-component-footer@1.0.13'
+RUN npm install '@pauldic/frontend-component-footer@1.0.14'
 RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@^4.0.0'
 RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.2.2'
 """,
