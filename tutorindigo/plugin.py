@@ -154,7 +154,7 @@ for mfe in indigo_styled_mfes:
             f"""
 # Copy this to the MFE Container build contest first [cp ~/.npmrc ~/.local/share/tutor/env/plugins/mfe/build/mfe/]
 COPY .npmrc /root/.npmrc
-RUN npm install '@pauldic/frontend-component-footer@1.0.26'
+RUN npm install '@pauldic/frontend-component-footer@1.0.27'
 RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@^4.0.0'
 RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.2.2'
 """,
